@@ -6,4 +6,4 @@ WORKDIR /TestingJobs
 
 COPY . .
 
-CMD ["pytest", "/TestingJobs/QAs/Developer/test_homework.py", "-v"]
+CMD ["pytest", "/TestingJobs/QAs/Developers/test_homework.py", "-v"]
