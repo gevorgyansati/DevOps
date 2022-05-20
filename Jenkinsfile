@@ -11,7 +11,7 @@ pipeline {
       steps {
         script {
           TAG_NAME = sh returnStdout: true, script: """ /bin/bash readDevData.sh TAG """
-          TAG_NAME = trimExample.trim();
+          TAG_NAME = TAG_NAME.trim();
           COMMIT_SHA = sh returnStdout: true, script: """ /bin/bash readDevData.sh COMMIT """
           COMMIT_SHA = trimExample.trim();
           REPO_LINK = sh returnStdout: true, script: """ /bin/bash readDevData.sh LINK """
