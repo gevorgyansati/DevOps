@@ -6,7 +6,7 @@ pipeline {
     COMMIT_SHA = ""
     REPO_LINK = ""
   }
-  stages {
+ /* stages {
     stage("Initialize Variables") {
       steps {
         script {
@@ -35,5 +35,5 @@ pipeline {
         sh "docker build -t my-app:${TAG_NAME} -f DevRepo/Dockerfile ."
       }
     }
-  }
+  }*/
 }
