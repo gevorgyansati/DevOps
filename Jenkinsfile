@@ -29,9 +29,7 @@ pipeline {
             error("Commit hashes are not equal each other")
           }
           
-          dir('DevRepo') {
             sh """git clone --depth 1 --branch "${TAG_NAME}" "${REPO_LINK}" """
-          }
         }
       }
     }
