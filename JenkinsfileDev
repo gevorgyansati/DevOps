@@ -1,0 +1,38 @@
+pipeline {
+  agent any
+  environment {
+    COMMIT_SHA_AFTER_TEST = ""
+    TAG_NAME = ""
+    COMMIT_SHA = ""
+    REPO_LINK = ""
+  }
+  stages {
+    stage("Initialize Variables Describing Developer Repo") {
+      steps {
+        script {
+          TAG_NAME = sh returnStdout: true, script: """ bash readDevData.sh TAG """
+          COMMIT_SHA = sh returnStdout: true, script: """ bash readDevData.sh COMMIT """
+          REPO_LINK = sh returnStdout: true, script: """ bash readDevData.sh LINK """
+        }
+      }
+    }
+    stage("Compare TAG Before test & TAG after test") {
+      steps {
+        script {
+          COMMIT_SHA_AFTER_TEST = sh returnStdout: true, script: " git ls-remote ${REPO_LINK}  rev-list -n 1 ${TAG_NAME} | awk '{ print $1}' "
+          if ("${COMMIT_SHA_AFTER_TEST}" != "${COMMIT_SHA}") {
+            error("Commit hashes are not equal each other")
+          }
+          dir('DevRepo') {
+            git clone --depth 1 --branch ${TAG_NAME} ${REPO_LINK}
+          }
+        }
+      }
+    }
+    stage("Build Image of Developer Repo application") {
+      steps {
+        sh "docker build -t my-app:${TAG_NAME} -f DevRepo/Dockerfile ."
+      }
+    }
+  }
+}
