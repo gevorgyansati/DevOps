@@ -10,9 +10,9 @@ pipeline {
     stage("Initialize Variables") {
       steps {
         script {
-          TAG_NAME = sh returnStdout: true, script: """ bash read.sh TAG"""
-          COMMIT_SHA = sh returnStdout: true, script: """bash read.sh COMMIT"""
-          REPO_LINK = sh returnStdout: true, script: """bash read.sh LINK"""      
+          TAG_NAME = sh returnStdout: true, script: """ bash readDevData.sh TAG"""
+          COMMIT_SHA = sh returnStdout: true, script: """bash readDevData.sh COMMIT"""
+          REPO_LINK = sh returnStdout: true, script: """bash readDevData.sh LINK"""      
         }
       }
     }
