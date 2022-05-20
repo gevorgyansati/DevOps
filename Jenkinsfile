@@ -41,7 +41,7 @@ pipeline {
   }
   post {
     always {
-      sh "rm -rf DevRepo" 
+      sh "rm -rf DeveloperTeam" 
     }
   }
 }
