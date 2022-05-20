@@ -1,5 +1,10 @@
+  pipeline {
+    agent any
+    triggers {
+      GenericTrigger(causeString: 'GenericCause', genericVariables: [[key: 'RELEASE_TAG', value: '$.release.tag_name'],
                                                                    [key: 'REPO_LINK', value: '$.repository.clone_url']]) 
   }
+  
   environment {
     COMMIT_SHA = ""
   }
@@ -26,8 +31,11 @@
     stage("Build & Run Testing Container") { 
       steps {
         sh "docker build -t temp_test_img ."
-        sh """docker run --rm --name temp_container temp_test_img > answers.txt""" 
       }  
     }
+    stage ("add info in file") {
+    steps {
+      sh " /bin/bash add.sh ${REPO_LINK} ${RELEASE_TAG} ${COMMIT_SHA}"
+      
   }
 }
