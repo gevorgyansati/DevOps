@@ -10,7 +10,7 @@
   }
   stages {
     
-    stage('checkout "QA" Repo) {
+    stage('checkout "QA" Repo') {
       steps {
         script {
           try {
