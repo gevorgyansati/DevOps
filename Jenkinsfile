@@ -13,6 +13,9 @@ pipeline {
           TAG_NAME = sh returnStdout: true, script: """ /bin/bash readDevData.sh TAG """
           COMMIT_SHA = sh returnStdout: true, script: """ /bin/bash readDevData.sh COMMIT """
           REPO_LINK = sh returnStdout: true, script: """ /bin/bash readDevData.sh LINK """
+          echo TAG_NAME
+          echo COMMIT_SHA
+          echo REPO_LINK
         }
       }
     }
