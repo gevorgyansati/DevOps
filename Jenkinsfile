@@ -24,18 +24,18 @@ pipeline {
         script {
           COMMIT_SHA_AFTER_TEST = sh returnStdout: true, script: """/bin/bash GetCommitHash.sh "${REPO_LINK}" "${TAG_NAME}" """
           COMMIT_SHA_AFTER_TEST = COMMIT_SHA_AFTER_TEST.trim();
-          echo COMMIT_SHA_AFTER_TEST
+          
           if("${COMMIT_SHA_AFTER_TEST}" != "${COMMIT_SHA}") {
             error("Commit hashes are not equal each other")
           }
           
-            sh """git clone --depth 1 --branch "${TAG_NAME}" "${REPO_LINK}" """
+          sh """git clone --depth 1 --branch "${TAG_NAME}" "${REPO_LINK}" """
         }
       }
     }
     stage("Build Image of Developer Repo application") {
       steps {
-        sh "docker build -f ./DevRepo/Dockerfile -t my-app:${TAG_NAME} ."
+        sh "docker build -f ./DeveloperTeam/Dockerfile -t my-app:${TAG_NAME} ."
       }
     }
   }
