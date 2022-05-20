@@ -32,7 +32,7 @@ pipeline {
     }
     stage("Build Image of Developer Repo application") {
       steps {
-        sh "docker build -t my-app:${TAG_NAME} -f DevRepo/Dockerfile ."
+        sh "docker build -f ./DevRepo/ -t my-app:${TAG_NAME} ."
       }
     }
   }
