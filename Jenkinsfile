@@ -13,9 +13,9 @@ pipeline {
           TAG_NAME = sh returnStdout: true, script: """ /bin/bash readDevData.sh TAG """
           TAG_NAME = TAG_NAME.trim();
           COMMIT_SHA = sh returnStdout: true, script: """ /bin/bash readDevData.sh COMMIT """
-          COMMIT_SHA = trimExample.trim();
+          COMMIT_SHA = COMMIT_SHA.trim();
           REPO_LINK = sh returnStdout: true, script: """ /bin/bash readDevData.sh LINK """
-          REPO_LINK = trimExample.trim();
+          REPO_LINK = REPO_LINK.trim();
         }
       }
     }
@@ -23,7 +23,7 @@ pipeline {
       steps {
         script {
           COMMIT_SHA_AFTER_TEST = sh returnStdout: true, script: """/bin/bash GetCommitHash.sh "${REPO_LINK}" "${TAG_NAME}" """
-          COMMIT_SHA_AFTER_TEST = trimExample.trim();
+          COMMIT_SHA_AFTER_TEST = COMMIT_SHA_AFTER_TEST.trim();
           echo COMMIT_SHA_AFTER_TEST
           if("${COMMIT_SHA_AFTER_TEST}" != "${COMMIT_SHA}") {
             error("Commit hashes are not equal each other")
