@@ -26,7 +26,7 @@ pipeline {
           }
           
           dir('DevRepo') {
-            sh """git clone --depth 1 --branch ${TAG_NAME} ${REPO_LINK}"""
+            sh """git clone --depth 1 --branch "${TAG_NAME}" "${REPO_LINK}" """
           }
         }
       }
