@@ -35,7 +35,7 @@
     }
     stage ("add info in file") {
     steps {
-      sh " /bin/bash read.sh ${REPO_LINK} ${RELEASE_TAG} ${COMMIT_SHA}"
+      sh " /bin/bash createDevData.sh ${REPO_LINK} ${RELEASE_TAG} ${COMMIT_SHA}"
       
   }
 }
