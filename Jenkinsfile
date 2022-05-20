@@ -19,7 +19,7 @@ pipeline {
     stage("Compare TAG Before test & TAG after test") {
       steps {
         script {
-          COMMIT_SHA_AFTER_TEST = sh returnStdout: true, script: "/bin/bash GetCommitHash.sh ${REPO_LINK} ${TAG_NAME}"
+          COMMIT_SHA_AFTER_TEST = sh returnStdout: true, script: """/bin/bash GetCommitHash.sh "${REPO_LINK}" "${TAG_NAME}" """
           if("${COMMIT_SHA_AFTER_TEST}" != "${COMMIT_SHA}") {
             error("Commit hashes are not equal each other")
           }
