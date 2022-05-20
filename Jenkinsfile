@@ -6,7 +6,7 @@ pipeline {
     COMMIT_SHA = ""
     REPO_LINK = ""
   }
- /* stages {
+  stages {
     stage("Initialize Variables") {
       steps {
         script {
@@ -16,7 +16,7 @@ pipeline {
         }
       }
     }
-    stage("Compare TAG Before test & TAG after test") {
+    /*stage("Compare TAG Before test & TAG after test") {
       steps {
         script {
           COMMIT_SHA_AFTER_TEST = sh returnStdout: true, script: "/bin/bash GetCommitHash.sh ${REPO_LINK} ${TAG_NAME}"
@@ -29,11 +29,11 @@ pipeline {
           }
         }
       }
-    }
+    }*/
     stage("Build Image of Developer Repo application") {
       steps {
         sh "docker build -t my-app:${TAG_NAME} -f DevRepo/Dockerfile ."
       }
     }
-  }*/
+  }
 }
