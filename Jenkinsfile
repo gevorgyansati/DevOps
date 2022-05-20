@@ -25,15 +25,15 @@ pipeline {
           }
           
           dir('DevRepo') {
-            git clone --depth 1 --branch ${TAG_NAME} ${REPO_LINK}
+            sh """git clone --depth 1 --branch ${TAG_NAME} ${REPO_LINK}"""
           }
         }
       }
     }
-    /*stage("Build Image of Developer Repo application") {
+    stage("Build Image of Developer Repo application") {
       steps {
         sh "docker build -t my-app:${TAG_NAME} -f DevRepo/Dockerfile ."
       }
-    }*/
+    }
   }
 }
