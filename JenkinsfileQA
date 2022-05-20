@@ -1,0 +1,46 @@
+pipeline {
+agent any
+triggers {
+  GenericTrigger(causeString: 'GenericCause', genericVariables: [
+    [key: 'RELEASE_TAG', value: '$.release.tag_name'],
+    [key: 'REPO_LINK', value: '$.repository.clone_url']
+  ])
+}
+environment {
+  COMMIT_SHA = ""
+}
+stages {
+  stage('checkout "QA" Repo') {
+    steps {
+      script {
+        try {
+          dir('QAs') {
+            git branch: 'main', url: "https://github.com/hakobmkoyan771/QATeam.git"
+            try {
+              dir('Developers') {
+                git branch: 'main', url: "${REPO_LINK}"
+                COMMIT_SHA = sh returnStdout: true, script: "git rev-list -n 1 ${RELEASE_TAG}"
+              }
+            } 
+            catch (Exception err) {
+              error("Unable to clone Developer's repo")
+            }
+          }
+        } 
+        catch (Exception err) {
+          error("Unable to clone Qa's repo")
+        }
+      }
+    }
+  }
+  stage("Build & Run Testing Container") {
+    steps {
+      sh "docker build -t temp_test_img ."
+    }
+  }
+  stage("Snapshot of Developer Repo") {
+    steps {
+      sh "/bin/bash createDevData.sh ${RELEASE_TAG} ${REPO_LINK} ${COMMIT_SHA}"
+    }
+  }
+}
