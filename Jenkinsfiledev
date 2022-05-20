@@ -10,9 +10,9 @@ pipeline {
     stage("Initialize Variables") {
       steps {
         script {
-          TAG_NAME = sh returnStdout: true, script: """docker exec redis_server redis-cli 'get' 'TAG_NAME' """
-          COMMIT_SHA = sh returnStdout: true, script: """docker exec redis_server redis-cli 'get' 'COMMIT_HASH' """
-          REPO_LINK = sh returnStdout: true, script: """docker exec redis_server redis-cli 'get' 'DEV_REPO' """      
+          TAG_NAME = sh returnStdout: true, script: """ bash read.sh TAG"""
+          COMMIT_SHA = sh returnStdout: true, script: """bash read.sh COMMIT"""
+          REPO_LINK = sh returnStdout: true, script: """bash read.sh LINK"""      
         }
       }
     }
