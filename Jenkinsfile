@@ -10,9 +10,9 @@ pipeline {
     stage("Initialize Variables Describing Developer Repo") {
       steps {
         script {
-          TAG_NAME = sh returnStdout: true, script: """ /bin/bash readDevData.sh TAG """
-          COMMIT_SHA = sh returnStdout: true, script: """ /bin/bash readDevData.sh COMMIT """
-          REPO_LINK = sh returnStdout: true, script: """ /bin/bash readDevData.sh LINK """
+          TAG_NAME = sh """ /bin/bash readDevData.sh TAG """
+          COMMIT_SHA = sh """ /bin/bash readDevData.sh COMMIT """
+          REPO_LINK = sh """ /bin/bash readDevData.sh LINK """
         }
       }
     }
@@ -20,9 +20,7 @@ pipeline {
       steps {
         script {
           COMMIT_SHA_AFTER_TEST = sh returnStdout: true, script: "/bin/bash GetCommitHash.sh ${REPO_LINK} ${TAG_NAME}"
-          if ("${COMMIT_SHA_AFTER_TEST}" != "${COMMIT_SHA}") {
-            error("Commit hashes are not equal each other")
-          }
+          error("Commit hashes are not equal each other")
           dir('DevRepo') {
             git clone --depth 1 --branch ${TAG_NAME} ${REPO_LINK}
           }
