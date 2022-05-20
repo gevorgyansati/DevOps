@@ -16,14 +16,19 @@
           try {
             dir('QAs') {
               git branch: 'main', url: "https://github.com/hakobmkoyan771/QATeam.git"
+              try {
               dir('Developers') {
                 git branch: 'main', url: "${REPO_LINK}"
                 COMMIT_SHA = sh returnStdout: true, script: "git rev-list -n 1 ${RELEASE_TAG}"
+                }
+              }
+              catch(Exception err) {
+                error("Unable to clone Developers repo")
               }
             }
           }
           catch(Exception err) {
-            error("Unable to clone developer's repo")
+            error("Unable to clone Qa's repo")
           }
         }  
       }
