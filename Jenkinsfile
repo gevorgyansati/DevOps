@@ -1,2 +1,3 @@
 pipeline {
+  echo "hello world"
 }
